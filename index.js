@@ -29,7 +29,7 @@ const courseSchema = new mongoose.Schema({
                     callback(result);
                 },4000);
             },
-            message: 'A course should have at least one tag'
+            message: 'A course should have at least one tag.'
         }
     },
     date: {type:Date, default:Date.now},
@@ -50,7 +50,7 @@ async function createCourse(){
     // course is a object (document) of Course Class
     const course = new Course ({
         name:'Angular Course',
-        category:'mobile',
+        category:'-',
         author:'Jack',
         tags:null,
         isPublished:true,
@@ -61,8 +61,10 @@ async function createCourse(){
         const result = await course.save();
         console.log(result);
     } 
-    catch (error) {
-        console.log(error.message);
+    catch (ex) {
+        for(field in ex.errors){
+            console.log(ex.errors[field].message);
+        }
     }
     
 }
