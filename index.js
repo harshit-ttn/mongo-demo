@@ -48,15 +48,14 @@ async function getCourses(){
 async function updateCourse(id){
     // Approcah : Update first
 
-    // update(filter,updateOperators)
-    const result = await Course.update({_id:id},{
+    const course = await Course.findByIdAndUpdate({_id:id},{
         $set: {
-            author: 'Mosh',
-            isPublished: true
+            author: 'Harshit',
+            isPublished: false
         }
-    });
+    },{new: true});
 
-    console.log(result);
+    console.log(course);
 }
 
 // createCourse();
