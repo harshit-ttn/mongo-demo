@@ -5,11 +5,29 @@ mongoose.connect('mongodb://localhost/playground')
 
 
 const courseSchema = new mongoose.Schema({
-    name:String,
+    name:{type:String, 
+        required:true,
+        minlength:5,
+        maxlength:255,
+        // match: /pattern/
+    },
+    category:{
+        type: String,
+        required: true,
+        enum:['web','mobile','network']
+    },
+
     author:String,
     tags: [String],
     date: {type:Date, default:Date.now},
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: {
+        type: Number,
+        required: function(){return this.isPublished;},
+        min: 10,
+        max: 200
+    }
+
 });
 
 // Course is a Class (Model)
@@ -19,13 +37,21 @@ async function createCourse(){
     // course is a object (document) of Course Class
     const course = new Course ({
         name:'Angular Course',
+        category:'mobile',
         author:'Mosh',
         tags:['angular','frontend'],
-        isPublished:true
+        isPublished:true,
+        price: 20
     });
 
-    const result = await course.save();
-    console.log(result);
+    try {
+        const result = await course.save();
+        console.log(result);
+    } 
+    catch (error) {
+        console.log(error.message);
+    }
+    
 }
 
 
@@ -65,10 +91,4 @@ async function removeCourse(id){
     console.log(course);
 }
 
-// createCourse();
-// getCourses();
-
-// updateCourse('623eebcb8777de9b3371b4a8');
-
-removeCourse('623eebcb8777de9b3371b4a8');
-
+createCourse();
