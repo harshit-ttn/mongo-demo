@@ -44,6 +44,31 @@ async function getCourses(){
     console.log(courses);
 }
 
+
+async function updateCourse(id){
+    // Approcah : Query first
+    // findById()
+    // Modify its properties
+    // save()
+
+    const course = await Course.findById(id);
+    if(!course) return;
+
+    course.isPublished = false;
+    course.author = 'Another Author';
+
+    // course.set({
+    //     isPublished: false,
+    //     author: 'Another Author'
+    // });
+
+    const result = await course.save();
+    console.log(result);
+
+}
+
 // createCourse();
-getCourses();
+// getCourses();
+
+updateCourse('623eebcb8777de9b3371b4a8');
 
