@@ -46,25 +46,17 @@ async function getCourses(){
 
 
 async function updateCourse(id){
-    // Approcah : Query first
-    // findById()
-    // Modify its properties
-    // save()
+    // Approcah : Update first
 
-    const course = await Course.findById(id);
-    if(!course) return;
+    // update(filter,updateOperators)
+    const result = await Course.update({_id:id},{
+        $set: {
+            author: 'Mosh',
+            isPublished: true
+        }
+    });
 
-    course.isPublished = false;
-    course.author = 'Another Author';
-
-    // course.set({
-    //     isPublished: false,
-    //     author: 'Another Author'
-    // });
-
-    const result = await course.save();
     console.log(result);
-
 }
 
 // createCourse();
